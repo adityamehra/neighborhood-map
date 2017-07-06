@@ -25,20 +25,10 @@
 
   <div class="col-md-3">
    <div class="listView">
-    <ol>
-     <li>
-      Item 1
+    <ul data-bind="foreach: listOfUrls">
+     <li data-bind="text: name">
      </li>
-     <li>
-      Item 1
-     </li>
-     <li>
-      Item 1
-     </li>
-     <li>
-      Item 1
-     </li>
-    </ol>
+    </ul>
    </div>
 
   </div>
@@ -48,8 +38,8 @@
  </div>
 </div>
 
-<script src="index.js"></script>
-
+<script src="js/vendor/knockout-3.2.0.js"></script>
+<script src="js/index.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHotqsRsHz3IhfPa28Wzjs_erPtSXbZGE&callback=initMap"></script>
 
 </body>
