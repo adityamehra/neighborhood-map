@@ -25,22 +25,31 @@
 
   <div class="col-md-3">
    <div class="listView">
-    <ul data-bind="foreach: listOfUrls">
-     <li data-bind="text: name">
+    <!-- <ul data-bind="foreach: listOfMarkers">
+     <li data-bind="text: title, click: $parent.showItem">
      </li>
-    </ul>
+    </ul> -->
+    <div class="list-group" data-bind="foreach: listOfMarkers">
+     <a href="#" class="list-group-item" data-bind="text: title, click: $parent.showItem"></a>
+    </div>
    </div>
-
   </div>
+
   <div class="col-md-9">
    <div id="map" class="mapView"></div>
   </div>
  </div>
 </div>
 
-<script src="js/vendor/knockout-3.2.0.js"></script>
-<script src="js/index.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHotqsRsHz3IhfPa28Wzjs_erPtSXbZGE&callback=initMap"></script>
+
+<script defer src="js/map.js"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHotqsRsHz3IhfPa28Wzjs_erPtSXbZGE&callback=initMap" onerror="mapError()"></script>
+<script defer src="js/vendor/knockout-3.2.0.js"></script>
+<script defer src="js/index.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
 
 </body>
 </html>
