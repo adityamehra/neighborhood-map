@@ -1,5 +1,3 @@
-console.log(markers.length);
-
 var ViewModel = function() {
 
  var that = this;
@@ -10,11 +8,33 @@ var ViewModel = function() {
   that.listOfMarkers.push(marker);
  });
 
- console.log(markers.length);
+ // https://stackoverflow.com/questions/20857594/knockout-filtering-on-observable-array
+ this.palceToBeSearched = ko.observable();
+
+ this.filteredPlaces = ko.computed( function() {
+		var filter = that.palceToBeSearched();
+		if (!filter) {
+   that.listOfMarkers().forEach(function(marker){
+    marker.setMap(map);
+   });
+			return that.listOfMarkers();
+		} else {
+			return ko.utils.arrayFilter(that.listOfMarkers(), function(marker) {
+    filter = filter.toLowerCase();
+				var string = marker.title.toLowerCase();
+				var result = (string.search(filter) >= 0);
+    console.log(result);
+    if(result === false){
+     marker.setMap(null);
+    }
+				return result;
+			});
+		}
+	});
 
  this.showItem = function(clickedItem){
   bounceMarker(clickedItem);
-  showMoreInfo(this);
+  showMoreInfo(clickedItem);
  }
 }
 

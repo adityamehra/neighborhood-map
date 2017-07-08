@@ -1,105 +1,6 @@
-var urls = [
- {
-  name: 'Lombard Street(San Francisco)',
-  icon: 'camera',
-  location: {
-   lat: 37.773972,
-   lng: -122.431297
-  }
- },
- {
-  name: 'Golden gate',
-  icon: 'camera',
-  location: {
-   lat: 37.8199,
-   lng: -122.4783
-  }
- },
- {
-  name: 'Napa valley',
-  icon: 'camera',
-  location: {
-   lat: 38.5025,
-   lng: -122.2654
-  }
- },
- {
-  name: 'Universal Studios Hollywood',
-  icon: 'camera',
-  location: {
-   lat: 34.1381,
-   lng: -118.3534
-  }
- },
- {
-  name: 'Disney World',
-  icon: 'camera',
-  location: {
-   lat: 33.812511,
-   lng: -117.918976
-  }
- },
- {
-  name: 'Quincy Market',
-  icon: 'restaurant',
-  location: {
-   lat: 42.3602,
-   lng: -71.0548
-  }
- },
- {
-  name: 'Toro Bravo',
-  icon: 'restaurant',
-  location: {
-   lat: 45.54099,
-   lng: -122.664231
-  }
- },
- {
-  name: 'Yellowstone National Park',
-  icon: 'tree',
-  location: {
-   lat: 44.4280,
-   lng: -110.5885
-  }
- },
- {
-  name: 'Grand Canyon National Park',
-  icon: 'tree',
-  location: {
-   lat: 36.1070,
-   lng: -112.1130
-  }
- },
- {
-  name: 'Yosemite National Park',
-  icon: 'tree',
-  location: {
-   lat: 37.8651,
-   lng: -119.5383
-  }
- },
- {
-  name: 'Zion National Park',
-  icon: 'tree',
-  location: {
-   lat: 37.2982,
-   lng: -113.0263
-  }
- },
- {
-  name: 'Great Smoky Mountains National Park',
-  icon: 'tree',
-  location: {
-   lat: 35.6532,
-   lng: -83.5070
-  }
- }
-];
-
 // Array to store markers
 var markers = [];
-console.log(markers.length);
+//console.log(markers.length);
 var infowindow;
 var map;
 
@@ -110,7 +11,7 @@ function mapError(){
 function initMap() {
  // Create a map object and specify the DOM element for display.
  map = new google.maps.Map(document.getElementById('map'), {
-   center: urls[0].location,
+   center: places[0].location,
    scrollwheel: false,
    zoom: 5
  });
@@ -118,16 +19,14 @@ function initMap() {
  infowindow = new google.maps.InfoWindow();
  var bounds = new google.maps.LatLngBounds();
 
- urls.forEach(function(url){
+ places.forEach(function(place){
   var marker = new google.maps.Marker({
-    position: url.location,
+    position: place.location,
     map: map,
-    icon: `http://maps.google.com/mapfiles/ms/micons/${url.icon}.png`,
-    title: url.name,
+    icon: `http://maps.google.com/mapfiles/ms/micons/${place.icon}.png`,
+    title: place.name,
     animation: google.maps.Animation.DROP
   });
-
-  markers.push(marker);
 
   marker.addListener('click', function(){
    bounceMarker(this);
@@ -139,11 +38,13 @@ function initMap() {
    showLessInfo(this);
   });
 
+  markers.push(marker);
+
   bounds.extend(marker.position);
  });
 
  map.fitBounds(bounds);
- console.log(markers.length);
+ //console.log(markers.length);
 }
 
 function bounceMarker(marker) {
@@ -162,7 +63,7 @@ function changeIcon(marker){
 function showMoreInfo(marker){
  if(infowindow.maker != marker){
   infowindow.marker = marker;
-  setContent(marker, infowindow);
+  getContent(marker, infowindow);
   infowindow.open(map, marker);
   infowindow.addListener('closeclick', function() {
    infowindow.marker = null;
@@ -181,7 +82,7 @@ function showLessInfo(marker){
  }
 }
 
-function setContent(marker, infowindow){
+function getContent(marker, infowindow){
 
  var wikiAPI = `http://en.wikipedia.org/w/api.php?action=opensearch&search=${marker.title}&format=json&callback=wikiCallback`;
  console.log(wikiAPI);
@@ -193,10 +94,15 @@ function setContent(marker, infowindow){
      success: function (data, textStatus, jqXHR) {
       console.log(data);
       for(let i = 0; i < data[1].length; i++){
-       wikiData = `<p>${data[2][0]}</p>
-                   <a href="${data[3][0]}"  target="_blank">${data[1][0]}</a>`;
+       if(wikiData === null){
+        wikiData = `<a href="${data[3][i]}"  target="_blank">${data[1][i]}</a>
+                   <p>${data[2][i]}</p>`;
+       }else{
+        wikiData += `<a href="${data[3][i]}"  target="_blank">${data[1][i]}</a>
+                    <p>${data[2][i]}</p>`;
+       }
       }
-      setWikiLink(marker, wikiData, infowindow);
+      setContent(marker, wikiData, infowindow);
       },
      error: function (errorMessage) {
       console.log("Unable to get data from wikipedia...")
@@ -204,13 +110,16 @@ function setContent(marker, infowindow){
  });
 }
 
-function setWikiLink(marker, wikiData, infowindow){
+function setContent(marker, wikiData, infowindow){
  if(wikiData !== null){
   infowindow.setContent(`<h2>${marker.title}</h2>
-                         ${wikiData}`
+                         <h4>Wikipedia Articles</h4>
+                         ${wikiData}
+                         <img class="bgimg" src="https://maps.googleapis.com/maps/api/streetview?size=150x100&location=${marker.title}&fov=90&heading=235&pitch=10">`
                         );
  }else{
-  infowindow.setContent(`<h2>${marker.title}</h2>`);
+  infowindow.setContent(`<h2>${marker.title}</h2>
+                         <img class="bgimg" src="https://maps.googleapis.com/maps/api/streetview?size=150x100&location=${marker.title}&fov=90&heading=235&pitch=10">`
+                        );
  }
-
 }
