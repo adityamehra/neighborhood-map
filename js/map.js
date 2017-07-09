@@ -25,6 +25,7 @@ function initMap() {
      var marker = new google.maps.Marker({
        position: place.location,
        map: map,
+       visible: true,
        icon: `http://maps.google.com/mapfiles/ms/micons/${place.icon}.png`,
        title: place.name,
        animation: google.maps.Animation.DROP
@@ -64,6 +65,7 @@ function changeIcon(marker){
 function showMoreInfo(marker){
     if(infowindow.maker != marker){
      infowindow.marker = marker;
+     infowindow.setContent('');
      // gets the content...
      getContent(marker, infowindow);
      infowindow.open(map, marker);
@@ -94,6 +96,7 @@ function getContent(marker, infowindow){
     //reset wikiContent and flickrContent
     wikiContent = null;
     flickrContent = null;
+
 
     var wikiAPI = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${marker.title}&format=json&callback=wikiCallback`;
     var flickrAPI = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=f300ce3ad381fbe11e3b8c498851ae9b&accuracy=11&lat=${marker.getPosition().lat().toFixed(4)}&lon=${marker.getPosition().lng().toFixed(4)}&format=json&nojsoncallback=1`;
