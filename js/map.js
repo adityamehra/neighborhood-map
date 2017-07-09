@@ -90,8 +90,8 @@ function initMap() {
         this.showItem = function(clickedItem){
          bounceMarker(clickedItem);
          showMoreInfo(clickedItem);
-        }
-    }
+        };
+    };
 
     ko.applyBindings(new ViewModel());
 }
