@@ -12,7 +12,7 @@
 
 <div class="container-fluid">
  <div class="row">
-  <div class="col-sm-0 col-md-3">
+  <div class="col-md-3">
    <div class="row">
     <div class="col-sm-12">
      <input type="text" class="form-control" placeholder="Search neighborhood map..." data-bind="textInput: palceToBeSearched, valueUpdate: 'afterkeydown'"/>
@@ -20,11 +20,9 @@
    </div>
    <div class="row">
     <div class="col-sm-12">
-     <div>
       <div class="list-group" data-bind="foreach: filteredPlaces">
        <a href="#" class="list-group-item" data-bind="text: title, click: $parent.showItem"></a>
       </div>
-     </div>
     </div>
    </div>
   </div>
