@@ -17,32 +17,30 @@ var ViewModel = function() {
 
     // this function filters the list based on the search query...
     this.filteredPlaces = ko.computed( function() {
-     var filter = that.placeToBeSearched().toLowerCase();
-     if (!filter) {
-      console.log("no filter");
-      ViewModel.listOfMarkers().forEach(function(marker){
-       marker.setVisible(true);
-      });
-      return ViewModel.listOfMarkers();
-     } else {
-      console.log(filter);
-      return ko.utils.arrayFilter(ViewModel.listOfMarkers(), function(marker) {
-       var string = marker.title.toLowerCase();
-       var result = (string.search(filter) >= 0);
-       if(result === false){
-        marker.setVisible(false);
-       }else{
-        marker.setVisible(true);
-       }
-       return result;
-      });
-     }
+        var filter = that.placeToBeSearched().toLowerCase();
+        if(!filter) {
+            ViewModel.listOfMarkers().forEach(function(marker){
+                marker.setVisible(true);
+            });
+            return ViewModel.listOfMarkers();
+        }else {
+            return ko.utils.arrayFilter(ViewModel.listOfMarkers(), function(marker) {
+                var string = marker.title.toLowerCase();
+                var result = (string.search(filter) >= 0);
+                if(result === false){
+                 marker.setVisible(false);
+                }else{
+                 marker.setVisible(true);
+                }
+                return result;
+            });
+        }
     });
 
     // links the click on listView with the map...
     this.showItem = function(clickedItem){
-     bounceMarker(clickedItem);
-     showMoreInfo(clickedItem);
+        bounceMarker(clickedItem);
+        showMoreInfo(clickedItem);
     };
 };
 
@@ -53,32 +51,32 @@ function mapError(){
 function initMap() {
     // Create a map object and specify the DOM element for display.
     map = new google.maps.Map(document.getElementById('map'), {
-      center: places[0].location,
-      scrollwheel: false,
-      zoom: 5
+        center: places[0].location,
+        scrollwheel: false,
+        zoom: 5
     });
 
     infowindow = new google.maps.InfoWindow();
     var bounds = new google.maps.LatLngBounds();
 
     places.forEach(function(place){
-     var marker = new google.maps.Marker({
-       position: place.location,
-       map: map,
-       visible: true,
-       icon: `http://maps.google.com/mapfiles/ms/micons/${place.icon}.png`,
-       title: place.name,
-       animation: google.maps.Animation.DROP
-     });
+        var marker = new google.maps.Marker({
+          position: place.location,
+          map: map,
+          visible: true,
+          icon: `http://maps.google.com/mapfiles/ms/micons/${place.icon}.png`,
+          title: place.name,
+          animation: google.maps.Animation.DROP
+        });
 
      marker.addListener('click', function(){
-      bounceMarker(this);
-      showMoreInfo(this);
-      changeIcon(this);
+         bounceMarker(this);
+         showMoreInfo(this);
+         changeIcon(this);
      });
 
      marker.addListener('mouseover', function(){
-      showLessInfo(this);
+         showLessInfo(this);
      });
 
      markers.push(marker);
@@ -91,7 +89,7 @@ function initMap() {
     ViewModel.listOfMarkers = ko.observableArray([]);
 
     markers.forEach(function(marker){
-     ViewModel.listOfMarkers.push(marker);
+        ViewModel.listOfMarkers.push(marker);
     });
 
     ko.applyBindings(new ViewModel());
@@ -112,26 +110,26 @@ function changeIcon(marker){
 // Fills the info window with more info...
 function showMoreInfo(marker){
     if(infowindow.maker != marker){
-     infowindow.marker = marker;
-     infowindow.setContent('');
-     // gets the content...
-     getContent(marker, infowindow);
-     infowindow.open(map, marker);
-     infowindow.addListener('closeclick', function() {
-      infowindow.marker = null;
-     });
+        infowindow.marker = marker;
+        infowindow.setContent('');
+        // gets the content...
+        getContent(marker, infowindow);
+        infowindow.open(map, marker);
+        infowindow.addListener('closeclick', function() {
+         infowindow.marker = null;
+        });
     }
 }
 
 // Fills the info window with title(name) of the marker/palce
 function showLessInfo(marker){
     if(infowindow.maker != marker){
-     infowindow.marker = marker;
-     infowindow.setContent(`${marker.title}`);
-     infowindow.open(map, marker);
-     infowindow.addListener('closeclick', function() {
-      infowindow.marker = null;
-     });
+        infowindow.marker = marker;
+        infowindow.setContent(`${marker.title}`);
+        infowindow.open(map, marker);
+        infowindow.addListener('closeclick', function() {
+         infowindow.marker = null;
+        });
     }
 }
 
@@ -150,57 +148,57 @@ function getContent(marker, infowindow){
         url: wikiAPI,
         dataType: "jsonp",
         success: function (data, textStatus, jqXHR) {
-         for(let i = 0; i < data[1].length; i++){
-          if(wikiData === null){
-           wikiData = `<a href="${data[3][i]}"  target="_blank">${data[1][i]}</a>
-                      <p>${data[2][i]}</p>`;
-          }else{
-           wikiData += `<a href="${data[3][i]}"  target="_blank">${data[1][i]}</a>
-                       <p>${data[2][i]}</p>`;
-          }
-         }
-         addWikiData(wikiData);
-         },
+            for(let i = 0; i < data[1].length; i++){
+                if(wikiData === null){
+                    wikiData = `<a href="${data[3][i]}"  target="_blank">${data[1][i]}</a>
+                              <p>${data[2][i]}</p>`;
+                }else{
+                    wikiData += `<a href="${data[3][i]}"  target="_blank">${data[1][i]}</a>
+                               <p>${data[2][i]}</p>`;
+                }
+            }
+            addWikiData(wikiData);
+        },
         error: function (errorMessage) {
-         wikiData = "<p>Unable to get data from wikipedia...</p>";
-         addWikiData(wikiData);
+            wikiData = "<p>Unable to get data from wikipedia...</p>";
+            addWikiData(wikiData);
         }
     });
 
     $.getJSON( flickrAPI, {
-         format: "json"
-       }).done(function(data){
-           if(data.stat == 'ok'){
+        format: "json"
+    }).done(function(data){
+        if(data.stat == 'ok'){
             for(var i = 0; i < 10; i++){
-             if(flickrPhotos === null){
-              flickrPhotos = `<h3>${i+1}</h3>
-                              <img src="https://farm${data.photos.photo[i].farm}.staticflickr.com/${data.photos.photo[i].server}/${data.photos.photo[i].id}_${data.photos.photo[i].secret}.jpg" />`;
-             }else{
-              flickrPhotos += `<h3>${i+1}</h3>
-                               <img src="https://farm${data.photos.photo[i].farm}.staticflickr.com/${data.photos.photo[i].server}/${data.photos.photo[i].id}_${data.photos.photo[i].secret}.jpg" />`;
-             }
+                if(flickrPhotos === null){
+                    flickrPhotos = `<h3>${i+1}</h3>
+                                  <img src="https://farm${data.photos.photo[i].farm}.staticflickr.com/${data.photos.photo[i].server}/${data.photos.photo[i].id}_${data.photos.photo[i].secret}.jpg" />`;
+                }else{
+                    flickrPhotos += `<h3>${i+1}</h3>
+                                   <img src="https://farm${data.photos.photo[i].farm}.staticflickr.com/${data.photos.photo[i].server}/${data.photos.photo[i].id}_${data.photos.photo[i].secret}.jpg" />`;
+                }
             }
-           }else{
+        }else{
             flickrPhotos = "<p>Unalbe to load Flickr photos...</p>";
-           }
-           addFlickrData(marker, flickrPhotos);
-       }).fail(function(err){
+        }
+        addFlickrData(marker, flickrPhotos);
+    }).fail(function(err){
         flickrPhotos = "<p>Unalbe to load Flickr photos...</p>";
         addFlickrData(marker, flickrPhotos);
-       });
+    });
 }
 
 // helper method to handle the async nature..
 function addWikiData(wikiData){
     if(wikiContent === null){
-     wikiContent = wikiData;
+        wikiContent = wikiData;
     }
 }
 
 // helper method to handle the async nature...
 function addFlickrData(marker, flickrData){
     if(flickrContent === null){
-     flickrContent = flickrData;
+        flickrContent = flickrData;
     }
     setContent(marker, infowindow);
 }
@@ -208,32 +206,32 @@ function addFlickrData(marker, flickrData){
 // checks for various combinations to set the data...
 function setContent(marker, mainContent){
     if(wikiContent !== null && flickrContent !== null){
-     console.log("1");
-     infowindow.setContent(`<h2>${marker.title}</h2>
-                            <h4>Wikipedia Articles</h4>
-                            ${wikiContent}
-                            <h4>Flickr Photos</h4>
-                            <p> These photos are taken from Flicker</p>
-                            ${flickrContent}`
-                           );
+        console.log("1");
+        infowindow.setContent(`<h2>${marker.title}</h2>
+                             <h4>Wikipedia Articles</h4>
+                             ${wikiContent}
+                             <h4>Flickr Photos</h4>
+                             <p> These photos are taken from Flicker</p>
+                             ${flickrContent}`
+        );
     }else if(wikiContent !== null && flickrContent === null){
-     console.log("2");
-     infowindow.setContent(`<h2>${marker.title}</h2>
-                            <img class="bgimg" src="https://maps.googleapis.com/maps/api/streetview?size=150x100&location=${marker.title}&fov=90&heading=235&pitch=10">
-                            <h4>Wikipedia Articles</h4>
-                            ${wikiContent}`
-                           );
+        console.log("2");
+        infowindow.setContent(`<h2>${marker.title}</h2>
+                             <img class="bgimg" src="https://maps.googleapis.com/maps/api/streetview?size=150x100&location=${marker.title}&fov=90&heading=235&pitch=10">
+                             <h4>Wikipedia Articles</h4>
+                             ${wikiContent}`
+        );
     }else if(wikiContent === null && flickrContent !== null){
-     console.log("3");
-     infowindow.setContent(`<h2>${marker.title}</h2>
-                            <h4>Flickr Photos</h4>
-                            <p> These photos are taken from Flicker</p>
-                            ${flickrContent}`
-                           );
+        console.log("3");
+        infowindow.setContent(`<h2>${marker.title}</h2>
+                             <h4>Flickr Photos</h4>
+                             <p> These photos are taken from Flicker</p>
+                             ${flickrContent}`
+        );
     }else{
-     console.log("4");
-     infowindow.setContent(`<h2>${marker.title}</h2>
-                            <img class="bgimg" src="https://maps.googleapis.com/maps/api/streetview?size=150x100&location=${marker.title}&fov=90&heading=235&pitch=10">`
-                           );
+        console.log("4");
+        infowindow.setContent(`<h2>${marker.title}</h2>
+                             <img class="bgimg" src="https://maps.googleapis.com/maps/api/streetview?size=150x100&location=${marker.title}&fov=90&heading=235&pitch=10">`
+        );
     }
 }
