@@ -8,13 +8,6 @@ html, body {
         padding: 0;
       }
 
-.searchView {
-}
-
-.listView{
-  height: 400px;
-}
-
 .mapView{
   height: 700px;
 }

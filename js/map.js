@@ -95,7 +95,7 @@ function getContent(marker, infowindow){
     wikiContent = null;
     flickrContent = null;
 
-    var wikiAPI = `http://en.wikipedia.org/w/api.php?action=opensearch&search=${marker.title}&format=json&callback=wikiCallback`;
+    var wikiAPI = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${marker.title}&format=json&callback=wikiCallback`;
     var flickrAPI = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=f300ce3ad381fbe11e3b8c498851ae9b&accuracy=11&lat=${marker.getPosition().lat().toFixed(4)}&lon=${marker.getPosition().lng().toFixed(4)}&format=json&nojsoncallback=1`;
 
     $.ajax({
