@@ -42,7 +42,7 @@ function initMap() {
 
      markers.push(marker);
 
-     bounds.extend(marker.position);
+     bounds.extend(marker.position)
     });
 
     map.fitBounds(bounds);
@@ -114,7 +114,7 @@ function getContent(marker, infowindow){
          addWikiData(wikiData);
          },
         error: function (errorMessage) {
-         wikiData = "<p>Unable to get data from wikipedia...</p>"
+         wikiData = "<p>Unable to get data from wikipedia...</p>";
          addWikiData(wikiData);
         }
     });
@@ -144,14 +144,14 @@ function getContent(marker, infowindow){
 
 // helper method to handle the async nature..
 function addWikiData(wikiData){
-    if(wikiContent == null){
+    if(wikiContent === null){
      wikiContent = wikiData;
     }
 }
 
 // helper method to handle the async nature...
 function addFlickrData(marker, flickrData){
-    if(flickrContent == null){
+    if(flickrContent === null){
      flickrContent = flickrData;
     }
     setContent(marker, infowindow);
