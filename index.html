@@ -12,7 +12,7 @@
 
 <div class="container-fluid">
  <div class="row">
-  <div class="col-md-3">
+  <div class="col-sm-0 col-md-3">
    <div class="row">
     <div class="col-sm-12">
      <input type="text" class="form-control" placeholder="Search neighborhood map..." data-bind="textInput: palceToBeSearched, valueUpdate: 'afterkeydown'"/>
@@ -28,8 +28,10 @@
     </div>
    </div>
   </div>
-  <div class="col-md-9">
-   <div id="map" class="mapView"></div>
+  <div class=" col-sm-12 col-md-9">
+   <div id="map" class="mapView">
+    <h2>Unable to load map!</h2>
+   </div>
   </div>
  </div>
 </div>
