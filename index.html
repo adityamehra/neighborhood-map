@@ -11,37 +11,37 @@
 
 <body>
 
-<main class="container-fluid">
- <div class="row">
-  <div class="col-md-3">
+ <main class="container-fluid">
    <div class="row">
-    <div class="col-sm-12">
-     <input type="text" class="form-control" placeholder="Search neighborhood map..." data-bind="textInput: placeToBeSearched, valueUpdate: 'keydown'"/>
-    </div>
-   </div>
-   <div class="row">
-    <div class="col-sm-12">
-     <div class="list-group" data-bind="foreach: filteredPlaces">
-      <a href="#" class="list-group-item" data-bind="text: title, click: $parent.showItem"></a>
+     <div class="col-md-3">
+       <div class="row">
+        <div class="col-sm-12">
+         <input type="text" class="form-control" placeholder="Search neighborhood map..." data-bind="textInput: placeToBeSearched, valueUpdate: 'keydown'"/>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-sm-12">
+         <div class="list-group" data-bind="foreach: filteredPlaces">
+          <a href="#" class="list-group-item" data-bind="text: title, click: $parent.showItem"></a>
+         </div>
+        </div>
+       </div>
      </div>
-    </div>
+     <div class="col-md-9">
+       <div id="map" class="mapView">
+        <h2>Unable to load map!</h2>
+       </div>
+     </div>
    </div>
-  </div>
-  <div class="col-md-9">
-   <div id="map" class="mapView">
-    <h2>Unable to load map!</h2>
-   </div>
-  </div>
- </div>
-</main>
+ </main>
 
-<script src="js/places.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="js/vendor/knockout-3.2.0.js"></script>
+ <script src="js/places.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="js/vendor/knockout-3.2.0.js"></script>
 
-<script src="js/map.js"></script>
-<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHotqsRsHz3IhfPa28Wzjs_erPtSXbZGE&callback=initMap" onerror="mapError()"></script>
-<script src="js/viewModel.js"></script>
+ <script src="js/map.js"></script>
+ <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHotqsRsHz3IhfPa28Wzjs_erPtSXbZGE&callback=initMap" onerror="mapError()"></script>
+ <!-- <script src="js/viewModel.js"></script> -->
 
 </body>
 </html>
