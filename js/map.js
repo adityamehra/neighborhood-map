@@ -1,7 +1,5 @@
 /*jshint esversion: 6 */
 
-"use strict";
-
 // Array to store markers
 var markers = [];
 var infowindow;
