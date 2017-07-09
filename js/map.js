@@ -61,27 +61,27 @@ function initMap() {
 
     places.forEach(function(place){
         var marker = new google.maps.Marker({
-          position: place.location,
-          map: map,
-          visible: true,
-          icon: `http://maps.google.com/mapfiles/ms/micons/${place.icon}.png`,
-          title: place.name,
-          animation: google.maps.Animation.DROP
+            position: place.location,
+            map: map,
+            visible: true,
+            icon: `http://maps.google.com/mapfiles/ms/micons/${place.icon}.png`,
+            title: place.name,
+            animation: google.maps.Animation.DROP
         });
 
-     marker.addListener('click', function(){
-         bounceMarker(this);
-         showMoreInfo(this);
-         changeIcon(this);
-     });
+        marker.addListener('click', function(){
+            bounceMarker(this);
+            showMoreInfo(this);
+            changeIcon(this);
+        });
 
-     marker.addListener('mouseover', function(){
-         showLessInfo(this);
-     });
+        marker.addListener('mouseover', function(){
+            showLessInfo(this);
+        });
 
-     markers.push(marker);
+        markers.push(marker);
 
-     bounds.extend(marker.position);
+        bounds.extend(marker.position);
     });
 
     map.fitBounds(bounds);
