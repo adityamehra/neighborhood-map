@@ -42,7 +42,7 @@ function initMap() {
 
      markers.push(marker);
 
-     bounds.extend(marker.position)
+     bounds.extend(marker.position);
     });
 
     map.fitBounds(bounds);
