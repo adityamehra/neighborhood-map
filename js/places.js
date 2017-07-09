@@ -1,3 +1,5 @@
+"use strict";
+
 var places = [
  {
   name: 'Lombard Street(San Francisco)',
