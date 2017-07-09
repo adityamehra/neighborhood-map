@@ -177,13 +177,13 @@ function setContent(marker, mainContent){
                            );
     }else if(wikiContent === null && flickrContent !== null){
      console.log("3");
-     infowindow.setContent(`<h2>${marker.title}</h2>s
+     infowindow.setContent(`<h2>${marker.title}</h2>
                             <h4>Flickr Photos</h4>
                             <p> These photos are taken from Flicker</p>
                             ${flickrContent}`
                            );
     }else{
-     onsole.log("4");
+     console.log("4");
      infowindow.setContent(`<h2>${marker.title}</h2>
                             <img class="bgimg" src="https://maps.googleapis.com/maps/api/streetview?size=150x100&location=${marker.title}&fov=90&heading=235&pitch=10">`
                            );
