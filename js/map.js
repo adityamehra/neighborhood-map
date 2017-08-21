@@ -64,7 +64,7 @@ function initMap() {
             position: place.location,
             map: map,
             visible: true,
-            icon: `http://maps.google.com/mapfiles/ms/micons/${place.icon}.png`,
+            icon: `https://maps.google.com/mapfiles/ms/micons/${place.icon}.png`,
             title: place.name,
             animation: google.maps.Animation.DROP
         });
@@ -104,7 +104,7 @@ function bounceMarker(marker) {
 
 function changeIcon(marker){
     // Change the icon to red-dot
-    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+    marker.setIcon('https://maps.google.com/mapfiles/ms/icons/red-dot.png');
 }
 
 // Fills the info window with more info...
